@@ -49,7 +49,7 @@ ls *.out *.err
 less JOBNAME-JOBID.out
 ```
 
-### 7. Revise cyclegan_train_singularity.slurm when you like to run the CycleGAN: 
+### 6. Revise cyclegan_train_singularity.slurm when you like to run the CycleGAN: 
 Please refer to the Step 3 and Step 4.
 
 ## Useful Resources:
