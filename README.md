@@ -65,6 +65,34 @@ TWCC actually provides a very sufficient GPU resources. If you like to use older
 1. The GAN algorithm is obtained from [pytorch-CycleGAN-and-pix2pix](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix)
 2. Image Dataset: Built-in dataset in the GAN algorithm repo.
 
+## Mixed Precision:
+The original code doesn't support the mixed precision while modern GPU supports FP16 and BF16. Hence, we provide a simple example to demo how to turn on the mixed precision in the training.
+
+```bash
+        for i, data in enumerate(dataset):  # inner loop within one epoch
+            .
+            .
+            .
+            model.set_input(data)  # unpack data from dataset and apply preprocessing
+            model.optimize_parameters()  # calculate loss functions, get gradients, update network weights
+```
+
+We add the following code into the train.py and add the optimize_parameters2() in the model of the Pix2Pix and CycleGAN.
+```bash
+        from torch.amp import autocast, GradScaler
+        for i, data in enumerate(dataset):  # inner loop within one epoch
+            .
+            .
+            .
+            model.set_input(data)  # unpack data from dataset and apply preprocessing
+			with autocast("cuda"):
+				model.forward() # Only use FP16 for generator    
+            model.optimize_parameters2()  # D forward, calculate loss functions, get gradients, update network weights in FP32.
+```
+
+In this code, the FP16 is not used for the D forward and the loss scaling which could be implemented later.
+
+
 ## Extra
 If you are interested in the Taiwan Computing Cloud (TWCC) with Tesla V100 GPU with a web interface, please read the slides "How to use TWCC-YOLOv9.pdf" in the Slides folder.
 
