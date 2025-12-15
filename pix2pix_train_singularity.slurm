@@ -32,7 +32,7 @@ module load singularity          # or: module load apptainer
 ########################
 CONTAINER="/work/hpc_sys/sifs/pytorch_23.11-py3.sif"
 
-WORKDIR="$HOME/pix2pix_demo/pytorch-CycleGAN-and-pix2pix"
+WORKDIR="$HOME/NCHC-GAN-Pix2Pix-CycleGAN-demo/pytorch-CycleGAN-and-pix2pix"
 cd "$WORKDIR" || { echo "Cannot cd to $WORKDIR"; exit 1; }
 
 echo "Working directory: $(pwd)"
